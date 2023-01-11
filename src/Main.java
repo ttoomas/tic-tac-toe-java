@@ -1,10 +1,11 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     static String line = "----------------------------------------------------------------------------------------------------------------";
     static String circle = "○";
     static String square = "◙";
-    static int[] gameNumbers = new int[9];
+    static int[][] gameNumbers = new int[3][3];
 
     public static void main(String[] args) {
         System.out.println("Vítej ve hře tic-tac-toe");
@@ -25,7 +26,7 @@ public class Main {
 
         // Position
         System.out.println("Zadej pozici");
-        int position = sc.nextInt();
+        double position = sc.nextDouble();
 
         if(position < 1 || position > 9){
             System.out.println("Zadal jsi špatnou pozici, zkus to znovu");
@@ -43,20 +44,28 @@ public class Main {
             return;
         }
 
-        gameNumbers[position - 1] = symbol;
+        double firstArrDouble = Math.ceil(position / 3);
+        int firstArr = (int)firstArrDouble;
+        int secondArr = (int)position - ((firstArr - 1) * 3);
+
+        gameNumbers[firstArr - 1][secondArr - 1] = symbol;
+
+//        gameNumbers[Math.ceil(1.5)][position - 1] = symbol;
 
         printLines();
 
-//        game();
+        game();
     }
 
     static void printLines(){
-        for (int i = 0; i < gameNumbers.length; i++) {
-            if(i % 3 == 0){
-                System.out.println();
-            }
+//        for (int i = 0; i < gameNumbers.length; i++) {
+//            if(i % 3 == 0){
+//                System.out.println();
+//            }
+//
+//            System.out.print(gameNumbers[i]);
+//        }
 
-            System.out.print(gameNumbers[i]);
-        }
+        System.out.println(Arrays.deepToString(gameNumbers));
     }
 }
