@@ -1,10 +1,13 @@
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Main {
     static String line = "----------------------------------------------------------------------------------------------------------------";
     static String circle = "○";
     static String square = "◙";
+    static boolean playerWon = false;
     static int[][] gameNumbers = new int[3][3];
 
     public static void main(String[] args) {
@@ -19,6 +22,11 @@ public class Main {
         System.out.println(line);
 
         game();
+
+//        int[] numbers = {1, 2, 3, 1, 0};
+//        int[] test = Arrays.stream(numbers).distinct().toArray();
+//
+//        System.out.println(Arrays.toString(test));
     }
 
     static void game(){
@@ -50,22 +58,40 @@ public class Main {
 
         gameNumbers[firstArr - 1][secondArr - 1] = symbol;
 
-//        gameNumbers[Math.ceil(1.5)][position - 1] = symbol;
-
         printLines();
-
-        game();
     }
 
     static void printLines(){
-//        for (int i = 0; i < gameNumbers.length; i++) {
-//            if(i % 3 == 0){
-//                System.out.println();
-//            }
-//
-//            System.out.print(gameNumbers[i]);
-//        }
+        playerWon = false;
 
-        System.out.println(Arrays.deepToString(gameNumbers));
+        for (int i = 0; i < gameNumbers.length; i++) {
+            System.out.println(Arrays.toString(gameNumbers[i]));
+
+            // Check rows
+            if(gameNumbers[i][0] == gameNumbers[i][1] && gameNumbers[i][1] == gameNumbers[i][2] && gameNumbers[i][0] != 0){
+                playerWon = true;
+            }
+
+            // Check column
+            else if(gameNumbers[0][i] == gameNumbers[1][i] && gameNumbers[1][i] == gameNumbers[2][i] && gameNumbers[0][i] != 0){
+                playerWon = true;
+            }
+        }
+
+        // Check diagonals
+        if(gameNumbers[0][0] == gameNumbers[1][1] && gameNumbers[1][1] == gameNumbers[2][2] && gameNumbers[0][0] != 0){
+            playerWon = true;
+        }
+        else if(gameNumbers[0][2] == gameNumbers[1][1] && gameNumbers[1][1] == gameNumbers[2][0] && gameNumbers[0][2] != 0){
+            playerWon = true;
+        }
+
+        if(playerWon){
+            System.out.println("Vyhrál jsi, gratuluji");
+            System.out.println("Pro novou hru musíš znovu spustit program");
+            return;
+        }
+
+        game();
     }
 }
